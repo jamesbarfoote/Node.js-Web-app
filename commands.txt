@@ -1,0 +1,78 @@
+ 
+olive-olive: [~] % create database barfoojame_nodejs
+create: Command not found.
+olive-olive: [~] % need postgres
+olive-olive: [~] % create database barfoojame_nodejs
+create: Command not found.
+olive-olive: [~] % createdb barfoojame_nodejs         
+olive-olive: [~] % psql barfoojame_nodejs
+psql (9.4.6)
+Type "help" for help.
+
+barfoojame_nodejs=> \dt
+No relations found.
+barfoojame_nodejs=> alter user barfoojame with password 'abc';
+ALTER ROLE
+barfoojame_nodejs=> create table (id serial primary key, task varchar, completed boolean default False);
+ERROR:  syntax error at or near "("
+LINE 1: create table (id serial primary key, task varchar, completed...
+                     ^
+barfoojame_nodejs=> create table todo (id serial primary key, task varchar, completed boolean default False);     
+CREATE TABLE
+barfoojame_nodejs=> \dt
+         List of relations
+ Schema | Name | Type  |   Owner    
+--------+------+-------+------------
+ public | todo | table | barfoojame
+(1 row)
+
+barfoojame_nodejs=> \d todo
+                                Table "public.todo"
+  Column   |       Type        |                     Modifiers                     
+-----------+-------------------+---------------------------------------------------
+ id        | integer           | not null default nextval('todo_id_seq'::regclass)
+ task      | character varying | 
+ completed | boolean           | default false
+Indexes:
+    "todo_pkey" PRIMARY KEY, btree (id)
+
+barfoojame_nodejs=> insert into todo (task) values ('item one');
+INSERT 0 1
+barfoojame_nodejs=> select * from todo;
+ id |   task   | completed 
+----+----------+-----------
+  1 | item one | f
+(1 row)
+
+barfoojame_nodejs=> select * from todo;
+ id |   task   | completed 
+----+----------+-----------
+  1 | item one | f
+(1 row)
+
+barfoojame_nodejs=> 
+barfoojame_nodejs=> select * from todo;
+ id |     task     | completed 
+----+--------------+-----------
+  1 | item one     | f
+  2 | another item | f
+(2 rows)
+
+barfoojame_nodejs=> select * from todo;
+ id |     task     | completed 
+----+--------------+-----------
+  2 | another item | f
+(1 row)
+
+barfoojame_nodejs=> select * from todo;
+ id |     task     | completed 
+----+--------------+-----------
+  2 | another item | t
+(1 row)
+
+barfoojame_nodejs=> select * from todo;
+ id |     task     | completed 
+----+--------------+-----------
+  2 | another item | t
+  3 | new item     | f
+(2 rows)
